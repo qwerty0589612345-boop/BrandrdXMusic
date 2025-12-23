@@ -20,12 +20,12 @@ async def atag_all_useres(_, message):
     userbot = await get_assistant(message.chat.id)
     if message.chat.id in SPAM_CHATS:
         return await message.reply_text(
-            "ᴛᴀɢɢɪɴɢ ᴘʀᴏᴄᴇss ɪs ᴀʟʀᴇᴀᴅʏ ʀᴜɴɴɪɴɢ ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ sᴛᴏᴘ sᴏ ᴜsᴇ /acancel"
+            "عملية المنشن جارية بالفعل، إذا كنت ترغب في الإيقاف أرسل /acancel ✨"
         )
     replied = message.reply_to_message
     if len(message.command) < 2 and not replied:
         await message.reply_text(
-            "** ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ᴛᴀɢ ᴀʟʟ, ʟɪᴋᴇ »** `@aall Hi Friends`"
+            "**يرجى كتابة نص مع الأمر، مثال »** `@aall هلا شباب` ✨"
         )
         return
     if replied:
@@ -83,8 +83,8 @@ async def cancelcmd(_, message):
             SPAM_CHATS.remove(chat_id)
         except Exception:
             pass
-        return await message.reply_text("**ᴛᴀɢɢɪɴɢ ᴘʀᴏᴄᴇss sᴜᴄᴄᴇssғᴜʟʟʏ sᴛᴏᴘᴘᴇᴅ!**")
+        return await message.reply_text("**تم إيقاف عملية المنشن بنجاح! ✨**")
 
     else:
-        await message.reply_text("**ɴᴏ ᴘʀᴏᴄᴇss ᴏɴɢᴏɪɴɢ!**")
+        await message.reply_text("**لا توجد عملية منشن جارية حالياً! ✨**")
         return
