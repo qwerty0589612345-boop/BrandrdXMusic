@@ -1,6 +1,6 @@
 from typing import Union
 
-from pyrogram import filters, types
+from pyrogram import filters, types, enums
 from pyrogram.types import InlineKeyboardMarkup, Message, InlineKeyboardButton
 
 from BrandrdXMusic import app
@@ -14,6 +14,7 @@ from BrandrdXMusic.utils.stuffs.buttons import BUTTONS
 from BrandrdXMusic.utils.stuffs.helper import Helper
 
 
+# ================== هيلب الخاص ==================
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("settings_back_helper") & ~BANNED_USERS)
 async def helper_private(
@@ -30,7 +31,8 @@ async def helper_private(
         _ = get_string(language)
         keyboard = help_pannel(_, True)
         await update.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
+            _["help_1"].format(SUPPORT_CHAT),
+            reply_markup=keyboard
         )
     else:
         try:
@@ -40,29 +42,34 @@ async def helper_private(
         language = await get_lang(update.chat.id)
         _ = get_string(language)
         keyboard = help_pannel(_)
-        
+
         await update.reply_photo(
-    photo="https://i.ibb.co/C3Tn6qgt/pexels-dsnsyj-1139541.jpg",
-    caption=_["help_1"].format(SUPPORT_CHAT),
-    reply_markup=keyboard
-)
+            photo=START_IMG_URL,
+            caption=_["help_1"].format(SUPPORT_CHAT),
+            reply_markup=keyboard
+        )
 
 
+# ================== هيلب الجروب (صورة بدل فيديو) ==================
 @app.on_message(filters.command(["help"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def help_com_group(client, message: Message, _):
     keyboard = private_help_panel(_)
-    await message.reply_video(
-        video="https://i.ibb.co/C3Tn6qgt/pexels-dsnsyj-1139541.jpg",
-        caption=_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard)
+    await message.reply_photo(
+        photo="https://i.ibb.co/C3Tn6qgt/pexels-dsnsyj-1139541.jpg",
+        caption=_["help_2"],
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
+
+# ================== أزرار الهيلب ==================
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
 @languageCB
 async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = help_back_markup(_)
+
     if cb == "hb1":
         await CallbackQuery.edit_message_text(helpers.HELP_1, reply_markup=keyboard)
     elif cb == "hb2":
@@ -93,11 +100,15 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
     elif cb == "hb15":
         await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
-    
 
+
+# ================== إدارة البوت ==================
 @app.on_callback_query(filters.regex("mbot_cb") & ~BANNED_USERS)
-async def helper_cb(client, CallbackQuery):
-    await CallbackQuery.edit_message_text(Helper.HELP_M, reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON))
+async def helper_manage_bot(client, CallbackQuery):
+    await CallbackQuery.edit_message_text(
+        Helper.HELP_M,
+        reply_markup=InlineKeyboardMarkup(BUTTONS.MBUTTON)
+    )
 
 
 @app.on_callback_query(filters.regex('managebot123'))
@@ -107,15 +118,28 @@ async def on_back_button(client, CallbackQuery):
     keyboard = help_pannel(_, True)
     if cb == "settings_back_helper":
         await CallbackQuery.edit_message_text(
-            _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
+            _["help_1"].format(SUPPORT_CHAT),
+            reply_markup=keyboard
         )
 
-@app.on_callback_query(filters.regex('mplus'))      
+
+# ================== إضافات ==================
+@app.on_callback_query(filters.regex('mplus'))
 async def mb_plugin_button(client, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
-    keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("ʙᴀᴄᴋ", callback_data=f"mbot_cb")]])
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("🔙 رجوع", callback_data="mbot_cb")]]
+    )
+
     if cb == "Okieeeeee":
-        await CallbackQuery.edit_message_text(f"`something errors`",reply_markup=keyboard,parse_mode=enums.ParseMode.MARKDOWN)
+        await CallbackQuery.edit_message_text(
+            "⚠️ حدث خطأ غير متوقع",
+            reply_markup=keyboard,
+            parse_mode=enums.ParseMode.MARKDOWN
+        )
     else:
-        await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
+        await CallbackQuery.edit_message_text(
+            getattr(Helper, cb),
+            reply_markup=keyboard
+        )
