@@ -1,5 +1,4 @@
 import asyncio
-
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
@@ -17,8 +16,10 @@ from BrandrdXMusic.utils.decorators.language import language
 from BrandrdXMusic.utils.formatters import alpha_to_int
 from config import adminlist
 
-IS_BROADCASTING = False
+# تـوقـيـع الـسـورس
+BODA_SIGNATURE = "➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ"
 
+IS_BROADCASTING = False
 
 @app.on_message(filters.command("broadcast") & SUDOERS)
 @language
@@ -29,24 +30,17 @@ async def braodcast_message(client, message, _):
         y = message.chat.id
     else:
         if len(message.command) < 2:
-            return await message.reply_text(_["broad_2"])
+            return await message.reply_text("❕ **يـرجـى كـتـابـة الـنـص أو الـرد عـلـى رسـالـة لـلإرسـال.**")
         query = message.text.split(None, 1)[1]
-        if "-pin" in query:
-            query = query.replace("-pin", "")
-        if "-nobot" in query:
-            query = query.replace("-nobot", "")
-        if "-pinloud" in query:
-            query = query.replace("-pinloud", "")
-        if "-assistant" in query:
-            query = query.replace("-assistant", "")
-        if "-user" in query:
-            query = query.replace("-user", "")
-        if query == "":
-            return await message.reply_text(_["broad_8"])
+        for tag in ["-pin", "-nobot", "-pinloud", "-assistant", "-user"]:
+            query = query.replace(tag, "")
+        if query.strip() == "":
+            return await message.reply_text("🖋 **يـرجـى تـحـديـد مـحـتـوى الإذاعـة.**")
 
     IS_BROADCASTING = True
-    await message.reply_text(_["broad_1"])
+    await message.reply_text("📣 **جـاري بـدء الإذاعـة الـشـامـلـة.. انـتـظـر لـحـظـة.**")
 
+    # الإذاعـة فـي الـمـجـمـوعـات
     if "-nobot" not in message.text:
         sent = 0
         pin = 0
@@ -83,10 +77,11 @@ async def braodcast_message(client, message, _):
             except:
                 continue
         try:
-            await message.reply_text(_["broad_3"].format(sent, pin))
+            await message.reply_text(f"💎 **تـم الإرسـال إلـى {sent} مـجـمـوعـة.\n📌 تـم تـثـبـيـت {pin} رسـالـة.**")
         except:
             pass
 
+    # الإذاعـة لـلـمـسـتـخـدمـيـن
     if "-user" in message.text:
         susr = 0
         served_users = []
@@ -110,14 +105,15 @@ async def braodcast_message(client, message, _):
             except:
                 pass
         try:
-            await message.reply_text(_["broad_4"].format(susr))
+            await message.reply_text(f"👤 **تـم الإرسـال إلـى {susr} مـسـتـخـدم فـي الـخـاص.**")
         except:
             pass
 
+    # إذاعـة الـحـسـابـات الـمـسـاعـدة
     if "-assistant" in message.text:
-        aw = await message.reply_text(_["broad_5"])
-        text = _["broad_6"]
-        from AnonXMusic.core.userbot import assistants
+        aw = await message.reply_text("⚙️ **جـاري الإذاعـة عـبـر الـحـسـابـات الـمـسـاعـدة..**")
+        text = "📊 **تـقـريـر الـمـسـاعـد:**\n\n"
+        from BrandrdXMusic.core.userbot import assistants
 
         for num in assistants:
             sent = 0
@@ -138,14 +134,14 @@ async def braodcast_message(client, message, _):
                     await asyncio.sleep(flood_time)
                 except:
                     continue
-            text += _["broad_7"].format(num, sent)
+            text += f"⭐ الـمـسـاعـد {num} ➻ أرسـل لـ {sent} دردشـة.\n"
         try:
-            await aw.edit_text(text)
+            await aw.edit_text(text + f"\n{BODA_SIGNATURE}")
         except:
             pass
     IS_BROADCASTING = False
 
-
+# تـنـظـيـف الـأدمـنـيـة
 async def auto_clean():
     while not await asyncio.sleep(10):
         try:
@@ -164,6 +160,5 @@ async def auto_clean():
                         adminlist[chat_id].append(user_id)
         except:
             continue
-
 
 asyncio.create_task(auto_clean())
