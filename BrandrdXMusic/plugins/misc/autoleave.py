@@ -1,6 +1,5 @@
 import asyncio
 from datetime import datetime
-
 from pyrogram.enums import ChatType
 
 import config
@@ -8,6 +7,8 @@ from BrandrdXMusic import app
 from BrandrdXMusic.core.call import Hotty, autoend
 from BrandrdXMusic.utils.database import get_client, is_active_chat, is_autoend
 
+# تـوقـيـع الـسـورس
+BODA_SIGNATURE = "➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ"
 
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT:
@@ -40,9 +41,7 @@ async def auto_leave():
                 except:
                     pass
 
-
 asyncio.create_task(auto_leave())
-
 
 async def auto_end():
     while not await asyncio.sleep(5):
@@ -63,12 +62,12 @@ async def auto_end():
                 except:
                     continue
                 try:
+                    # رسـالـة مـتـوازنـة تـجـمـع بـيـن الـفـخـامـة والـبـسـاطـة
                     await app.send_message(
                         chat_id,
-                        "» ʙᴏᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ʟᴇғᴛ ᴠɪᴅᴇᴏᴄʜᴀᴛ ʙᴇᴄᴀᴜsᴇ ɴᴏ ᴏɴᴇ ᴡᴀs ʟɪsᴛᴇɴɪɴɢ ᴏɴ ᴠɪᴅᴇᴏᴄʜᴀᴛ.",
+                        f"⚠️ **تـم إيـقـاف الـتـشـغـيـل تـلـقـائـيـاً لـعـدم وجـود مـسـتـمـعـيـن فـي الـمـكـالـمـة.**\n\n{BODA_SIGNATURE}",
                     )
                 except:
                     continue
-
 
 asyncio.create_task(auto_end())
