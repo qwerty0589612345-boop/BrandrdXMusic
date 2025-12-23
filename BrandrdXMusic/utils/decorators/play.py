@@ -37,7 +37,7 @@ def PlayWrapper(command):
                 [
                     [
                         InlineKeyboardButton(
-                            text="ʜᴏᴡ ᴛᴏ ғɪx ?",
+                            text="إزاي أصلح ده؟ ✨",
                             callback_data="AnonymousAdmin",
                         ),
                     ]
@@ -48,7 +48,7 @@ def PlayWrapper(command):
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
                 return await message.reply_text(
-                    text=f"{app.mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_CHAT}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
+                    text=f"البوت {app.mention} في وضع الصيانة حالياً 🛠️\nتقدر تعرف السبب في <a href={SUPPORT_CHAT}>جروب الدعم</a> 🤍",
                     disable_web_page_preview=True,
                 )
 
@@ -206,7 +206,7 @@ def CPlayWrapper(command):
                 [
                     [
                         InlineKeyboardButton(
-                            text="ʜᴏᴡ ᴛᴏ ғɪx ?",
+                            text="إزاي أصلح ده؟ ✨",
                             callback_data="AnonymousAdmin",
                         ),
                     ]
@@ -217,7 +217,7 @@ def CPlayWrapper(command):
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
                 return await message.reply_text(
-                    text=f"{i.mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_CHAT}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
+                    text=f"البوت {i.mention} في وضع الصيانة حالياً 🥀\nتقدر تعرف السبب في <a href={SUPPORT_CHAT}>جروب الدعم</a> 🤍",
                     disable_web_page_preview=True,
                 )
 
