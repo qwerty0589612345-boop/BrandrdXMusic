@@ -9,6 +9,7 @@ from BrandrdXMusic.utils.extraction import extract_user
 from BrandrdXMusic.utils.inline import close_markup
 from config import BANNED_USERS, OWNER_ID
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
 
 @app.on_message(filters.command(["addsudo"]) & filters.user(OWNER_ID))
 @language
@@ -48,13 +49,15 @@ async def userdel(client, message: Message, _):
 @language
 async def sudoers_list(client, message: Message, _):
     if message.from_user.id not in SUDOERS:
-        return await message.reply_text("💔 <b>ᴏᴡɴᴇʀs:</b>\n1➤ <a href='https://t.me/BRANDED_WORLD'>🇷🇺⛦°𝗕𝗥𝗔𝗡𝗗𝗘𝗗 𓆩🇽𓆪 𝗞𝗜𝗡𝗚🇳</a>",
-        disable_web_page_preview=True,
-        parse_mode="html")
+        return await message.reply_text(
+            "**قـائـمـة مـطـوري الـسـورس : ✨**\n\n**1ـ [بُـودَا](https://github.com/Mohamed05896)**",
+            disable_web_page_preview=True,
+            parse_mode="html"
+        )
     text = _["sudo_5"]
     user = await app.get_users(OWNER_ID)
     user = user.first_name if not user.mention else user.mention
-    text += f"1➤ {user}\n"
+    text += f"**1ـ {user}**\n"
     count = 0
     smex = 0
     for user_id in SUDOERS:
@@ -66,10 +69,12 @@ async def sudoers_list(client, message: Message, _):
                     smex += 1
                     text += _["sudo_6"]
                 count += 1
-                text += f"{count}➤ {user}\n"
+                text += f"**{count}ـ {user}**\n"
             except:
                 continue
     if not text:
         await message.reply_text(_["sudo_7"])
     else:
         await message.reply_text(text, reply_markup=close_markup(_))
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
