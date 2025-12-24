@@ -27,12 +27,14 @@ from strings import get_string
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    await message.react("💖")
+    await message.react("❤")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            await message.reply_sticker("CAACAgUAAxkBAAEQI1RlTLnRAy4h9lOS6jgS5FYsQoruOAAC1gMAAg6ryVcldUr_lhPexzME")
+            # تم تغيير الاستيكر هنا وإضافة نص المساعدة
+            await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
+            await message.reply_text("لروئية الاوامر اكتب /help")
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -87,43 +89,41 @@ async def start_pm(client, message: Message, _):
 
         try:
             out = private_panel(_)
-            lol = await message.reply_text("أهـلاً بيك يا {}.. ❣️".format(message.from_user.mention))
-            await lol.edit_text("نورتنـا يا {}.. 🥳".format(message.from_user.mention))
-            await lol.edit_text("يا مـراحب {}.. 💥".format(message.from_user.mention))
-            await lol.edit_text("ثـواني بـس {}.. 🤩".format(message.from_user.mention))
-            await lol.edit_text("بجـهز البيـانات {}.. 💌".format(message.from_user.mention))
-            await lol.edit_text("أهـلاً بيك مـرة تانية {}.. 💞".format(message.from_user.mention))
+            lol = await message.reply_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️".format(message.from_user.mention))
+            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳".format(message.from_user.mention))
+            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥".format(message.from_user.mention))
+            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩".format(message.from_user.mention))
+            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌".format(message.from_user.mention))
+            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💞".format(message.from_user.mention))
                
             await lol.delete()
-            lols = await message.reply_text("**⚡جـ**")
+            lols = await message.reply_text("**⚡️ѕ**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("⚡جـا")        
+            await lols.edit_text("⚡ѕт")        
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري**")
+            await lols.edit_text("**⚡ѕтα**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري ا**")
+            await lols.edit_text("**⚡ѕтαя**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري التـ**")
+            await lols.edit_text("**⚡ѕтαят**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري التـشـ**")
+            await lols.edit_text("**⚡ѕтαятι**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري التـشـغـ**")
+            await lols.edit_text("**⚡ѕтαятιи**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري التـشـغـيـل**")
+            await lols.edit_text("**⚡ѕтαятιиg**")
             await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡جـاري التـشـغـيـل..**")
+            await lols.edit_text("**⚡ѕтαятιиg.**")
 
-            await lols.edit_text("**⚡جـاري التـشـغـيـل....**")
+            await lols.edit_text("**⚡ѕтαятιиg....**")
 
-            await lols.edit_text("**⚡جـاري التـشـغـيـل..**")
-            await lols.edit_text("**⚡جـاري التـشـغـيـل....**")
+            await lols.edit_text("**⚡ѕтαятιиg.**")
+            await lols.edit_text("**⚡ѕтαятιиg....**")
             
-            # --- التعديل هنا ---
-            # تم إرسال الاستيكر والرسالة ولن يتم حذفهما
-            await message.reply_sticker("CAACAgUAAxkBAAEQI1BlTLmx7PtOO3aPNshEU2gCy7iAFgACNQUAApqMuVeA6eJ50VbvmDME")
-            await message.reply_text("لرؤية الأوامر اضغط /help 🥀")
-            # -------------------
-
+            # تم تغيير الاستيكر هنا وإضافة نص المساعدة
+            m = await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
+            await message.reply_text("لروئية الاوامر اكتب /help")
+            
             if message.chat.photo:
 
                 userss_photo = await app.download_media(
@@ -137,10 +137,8 @@ async def start_pm(client, message: Message, _):
 
         except AttributeError:
             chat_photo = "assets/nodp.png"
-        
         await lols.delete()
-        # تم حذف سطر await m.delete() لضمان بقاء الاستيكر
-        
+        await m.delete()
         await message.reply_photo(
             photo=chat_photo,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
