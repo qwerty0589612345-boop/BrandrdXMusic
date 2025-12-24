@@ -2,20 +2,28 @@ from BrandrdXMusic import app
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-@app.on_message(filters.command("id"))
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
+
+@app.on_message(filters.command(["id", "ايدي", "ايديه"]))
 def ids(_, message):
     reply = message.reply_to_message
     if reply:
-        button = InlineKeyboardButton("✯ ᴄʟᴏsᴇ ✯", callback_data="close")
+        # لو باعت الأمر ريبلاي على حد
+        button = InlineKeyboardButton("✯ إغـلاق ✯", callback_data="close")
         markup = InlineKeyboardMarkup([[button]])
         message.reply_text(
-            f"User {reply.from_user.first_name} ID is : {reply.from_user.id}",
+            f"**👤 اسـم الـمـسـتـخـدم :** {reply.from_user.first_name}\n"
+            f"**🆔 آيـدي الـمـسـتـخـدم :** `{reply.from_user.id}`",
             reply_markup=markup
         )
     else:
-        button = InlineKeyboardButton("✯ ᴄʟᴏsᴇ ✯", callback_data="close")
+        # لو باعت الأمر في الجروب عادي
+        button = InlineKeyboardButton("✯ إغـلاق ✯", callback_data="close")
         markup = InlineKeyboardMarkup([[button]])
-        message.reply(
-           f"ᴛʜɪs ɢʀᴏᴜᴩ's ɪᴅ ɪs: {message.chat.id}",
-           reply_markup=markup
+        message.reply_text(
+            f"**ID للمجموعة :** `{message.chat.id}`\n"
+            f"**ID الخاص بك :** `{message.from_user.id}`",
+            reply_markup=markup
         )
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
