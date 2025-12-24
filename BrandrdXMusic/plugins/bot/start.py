@@ -32,9 +32,9 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            # تم تغيير الاستيكر هنا وإضافة نص المساعدة
+            # الاستيكر الجديد مع جملة المساعدة وعلامتك
             await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
-            await message.reply_text("لروئية الاوامر اكتب /help")
+            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ")
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -45,7 +45,7 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"**المستخدم {message.from_user.mention} فتح البوت عشان يشوف قائمة المطورين.**\n\n**الأيدي :** `{message.from_user.id}`\n**اليوزر :** @{message.from_user.username}",
                 )
             return
         if name[0:3] == "inf":
@@ -83,60 +83,55 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"**المستخدم {message.from_user.mention} فتح البوت عشان يشوف معلومات المسار.**\n\n**الأيدي :** `{message.from_user.id}`\n**اليوزر :** @{message.from_user.username}",
                 )
     else:
 
         try:
             out = private_panel(_)
-            lol = await message.reply_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ︎ {}.. ❣️".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🥳".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💥".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 🤩".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💌".format(message.from_user.mention))
-            await lol.edit_text("𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐁𝐚𝐛𝐲 ꨄ {}.. 💞".format(message.from_user.mention))
+            # ترحيب معرب
+            lol = await message.reply_text("✨ منور يا {}.. ❣️".format(message.from_user.mention))
+            await asyncio.sleep(0.4)
+            await lol.edit_text("✨ أهلاً بك {}.. 🥳".format(message.from_user.mention))
+            await asyncio.sleep(0.4)
+            await lol.edit_text("✨ نورت البوت يا حب {}.. 💥".format(message.from_user.mention))
                
             await lol.delete()
-            lols = await message.reply_text("**⚡️ѕ**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("⚡ѕт")        
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтα**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαя**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαят**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιи**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
+            lols = await message.reply_text("**⚡ ج**")
+            # سرعة هادية للتحميل
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جا**")        
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جارِ**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري الـ**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري التحـ**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري التحميل**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري التحميل..**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري التحميل...**")
+            await asyncio.sleep(0.4)
+            await lols.edit_text("**⚡ جاري التحميل....**")
 
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-            
-            # تم تغيير الاستيكر هنا وإضافة نص المساعدة
+            # الاستيكر الجديد مع جملة المساعدة وعلامتك
             m = await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
-            await message.reply_text("لروئية الاوامر اكتب /help")
+            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ")
             
             if message.chat.photo:
-
                 userss_photo = await app.download_media(
                     message.chat.photo.big_file_id,
                 )
             else:
                 userss_photo = "assets/nodp.png"
-            if userss_photo:
-                chat_photo = userss_photo
-            chat_photo = userss_photo if userss_photo else START_IMG_URL
+            
+            chat_photo = userss_photo if userss_photo else config.START_IMG_URL
 
         except AttributeError:
             chat_photo = "assets/nodp.png"
+        
         await lols.delete()
         await m.delete()
         await message.reply_photo(
@@ -149,7 +144,7 @@ async def start_pm(client, message: Message, _):
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOG_GROUP_ID,
-                f"{message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ. \n\n**ᴜsᴇʀ ɪᴅ : {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ: {sender_name}",
+                f"**{message.from_user.mention} بدأ تشغيل البوت الآن.**\n\n**الأيدي :** `{sender_id}`\n**الاسم :** {sender_name}",
             )          
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
