@@ -7,17 +7,18 @@ from BrandrdXMusic import app
 from BrandrdXMusic.mongo.afkdb import LOGGERS as OWNERS
 from BrandrdXMusic.utils.database import add_served_chat, get_assistant
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
 
 @app.on_message(filters.command("repo"))
 async def help(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/1aac9a42f6f35138da34b.jpg",
-        caption=f"""🍁𝐂𝐋𝐈𝐂𝐊🥰𝐁𝐄𝐋𝐎𝐖💝𝐁𝐔𝐓𝐓𝐎𝐍✨𝐓𝐎🙊𝐆𝐄𝐓🌱𝐑𝐄𝐏𝐎🍁""",
+        photo=f"https://files.catbox.moe/ht74e3.jpg",
+        caption=f"""**مـرحـبـاً بـك.. ✨**\n\n**يـمـكـنـك الـحـصـول عـلـى سـورس الـبـوت مـن خـلال الـزر الـتـالـي..**""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "ƨσʋяcɛ", url=f"https://github.com/WCGKING/BrandrdXMusic"
+                        "✧ سـورس بُـودَا ✧", url=f"https://github.com/Mohamed05896"
                     )
                 ]
             ]
@@ -28,13 +29,13 @@ async def help(client: Client, message: Message):
 @app.on_message(filters.command("clone"))
 async def clones(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/1aac9a42f6f35138da34b.jpg",
-        caption=f"""**🙂You Are Not Sudo User So You Are Not Allowed To Clone Me.**\n**😌Click Given Below Button And Host Manually Otherwise Contact Owner Or Sudo Users For Clone.**""",
+        photo=f"https://files.catbox.moe/ht74e3.jpg",
+        caption=f"""**عـذراً.. هـذا الأمـر مـخـصـص لـمـطـوري الـسـورس فـقـط.. ✨**\n\n**يـمـكـنـك تـنـصـيـب الـسـورس يـدويـاً مـن خـلال الـرابـط أدناه..**""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "ƨσʋяcɛ", url=f"https://github.com/WCGKING/BrandrdXMusic"
+                        "✧ سـورس بُـودَا ✧", url=f"https://github.com/Mohamed05896"
                     )
                 ]
             ]
@@ -68,7 +69,7 @@ async def add_allbot(client, message):
     command_parts = message.text.split(" ")
     if len(command_parts) != 2:
         await message.reply(
-            "**⚠️ ɪɴᴠᴀʟɪᴅ ᴄᴏᴍᴍᴀɴᴅ ғᴏʀᴍᴀᴛ. ᴘʟᴇᴀsᴇ ᴜsᴇ ʟɪᴋᴇ » `/gadd @Systumm_music_bot`**"
+            "**خـطـأ فـي تـنـسـيـق الأمـر.. يـرجـى الاسـتـخـدام هـكـذا » `/gadd @User_Bot`**"
         )
         return
 
@@ -79,7 +80,7 @@ async def add_allbot(client, message):
         app_id = bot.id
         done = 0
         failed = 0
-        lol = await message.reply("🔄 **ᴀᴅᴅɪɴɢ ɢɪᴠᴇɴ ʙᴏᴛ ɪɴ ᴀʟʟ ᴄʜᴀᴛs!**")
+        lol = await message.reply("**جـاري إضافة الـبـوت إلـى جـمـيـع الـدردشـات.. يـرجـى الانـتـظـار.. 🔄**")
         await userbot.send_message(bot_username, f"/start")
         async for dialog in userbot.get_dialogs():
             if dialog.chat.id == -1001754457302:
@@ -89,29 +90,30 @@ async def add_allbot(client, message):
                 await userbot.add_chat_members(dialog.chat.id, app_id)
                 done += 1
                 await lol.edit(
-                    f"**🔂 ᴀᴅᴅɪɴɢ {bot_username}**\n\n**➥ ᴀᴅᴅᴇᴅ ɪɴ {done} ᴄʜᴀᴛs ✅**\n**➥ ғᴀɪʟᴇᴅ ɪɴ {failed} ᴄʜᴀᴛs ❌**\n\n**➲ ᴀᴅᴅᴇᴅ ʙʏ»** @{userbot.username}"
+                    f"**جـاري إضافة {bot_username}.. ✨**\n\n**➥ تـم فـي {done} مـجـمـوعـة ✅**\n**➥ فـشـل فـي {failed} مـجـمـوعـة ❌**\n\n**➲ بـواسـطـة الـمـسـاعـد»** @{userbot.username}"
                 )
             except Exception as e:
                 failed += 1
                 await lol.edit(
-                    f"**🔂 ᴀᴅᴅɪɴɢ {bot_username}**\n\n**➥ ᴀᴅᴅᴇᴅ ɪɴ {done} ᴄʜᴀᴛs ✅**\n**➥ ғᴀɪʟᴇᴅ ɪɴ {failed} ᴄʜᴀᴛs ❌**\n\n**➲ ᴀᴅᴅɪɴɢ ʙʏ»** @{userbot.username}"
+                    f"**جـاري إضافة {bot_username}.. ✨**\n\n**➥ تـم فـي {done} مـجـمـوعـة ✅**\n**➥ فـشـل فـي {failed} مـجـمـوعـة ❌**\n\n**➲ بـواسـطـة الـمـسـاعـد»** @{userbot.username}"
                 )
-            await asyncio.sleep(3)  # Adjust sleep time based on rate limits
+            await asyncio.sleep(3) 
 
         await lol.edit(
-            f"**➻ {bot_username} ʙᴏᴛ ᴀᴅᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ🎉**\n\n**➥ ᴀᴅᴅᴇᴅ ɪɴ {done} ᴄʜᴀᴛs ✅**\n**➥ ғᴀɪʟᴇᴅ ɪɴ {failed} ᴄʜᴀᴛs ❌**\n\n**➲ ᴀᴅᴅᴇᴅ ʙʏ»** @{userbot.username}"
+            f"**تـم الانـتـهـاء مـن إضافة الـبـوت بـنـجـاح.. 🎉**\n\n**➥ الـمـجـمـوعـات الـنـاجـحـة: {done} ✅**\n**➥ الـمـجـمـوعـات الـفـاشـلـة: {failed} ❌**"
         )
     except Exception as e:
         await message.reply(f"Error: {str(e)}")
 
 
-__MODULE__ = "Sᴏᴜʀᴄᴇ"
+__MODULE__ = "الـسـورس"
 __HELP__ = """
-## Rᴇᴘᴏ Sᴏᴜʀᴄᴇ Mᴏᴅᴜᴇ
+**قـسـم أوامـر الـسـورس :**
 
-Tʜɪs ᴍᴏᴅᴜᴇ ᴘʀᴏᴠɪᴅᴇs ᴜᴛɪɪᴛʏ ᴄᴏᴍᴍᴀɴᴅs ғᴏʀ ᴜsᴇʀs ᴛᴏ ɪɴᴛᴇʀᴀᴄᴛ ᴡɪᴛʜ ᴛʜᴇ ʙᴏᴛ.
+- `/repo` : لـمـعـرفـة سـورس الـبـوت والـمـطـور.
+- `/clone` : لـعـمـل نـسـخـة مـن الـبـوت (لـلـمـطـوريـن).
 
-### Cᴏᴍᴍᴀɴᴅs:
-- `/ʀᴇᴘᴏ`: Gᴇᴛ ᴛʜᴇ ɪɴᴋ ᴛᴏ ᴛʜᴇ ʙᴏᴛ's sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ ʀᴇᴘᴏsɪᴛᴏʀʏ.
+**➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا**
 """
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
