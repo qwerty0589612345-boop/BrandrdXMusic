@@ -14,14 +14,14 @@ def upload_file(file_path):
     if response.status_code == 200:
         return True, response.text.strip()
     else:
-        return False, f"ᴇʀʀᴏʀ: {response.status_code} - {response.text}"
+        return False, f"خطأ: {response.status_code} - {response.text}"
 
 
 @app.on_message(filters.command(["tgm", "tgt", "telegraph", "tl"]))
 async def get_link_group(client, message):
     if not message.reply_to_message:
         return await message.reply_text(
-            "Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇᴅɪᴀ ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴏɴ Tᴇʟᴇɢʀᴀᴘʜ"
+            "يرجى الرد على صورة أو فيديو أو ملف لرفعه على Telegraph"
         )
 
     media = message.reply_to_message
@@ -34,31 +34,35 @@ async def get_link_group(client, message):
         file_size = media.document.file_size
 
     if file_size > 200 * 1024 * 1024:
-        return await message.reply_text("Pʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ᴍᴇᴅɪᴀ ғɪʟᴇ ᴜɴᴅᴇʀ 200MB.")
+        return await message.reply_text(
+            "حجم الملف كبير، الحد الأقصى المسموح به 200MB"
+        )
 
     try:
-        text = await message.reply("Pʀᴏᴄᴇssɪɴɢ...")
+        text = await message.reply("جاري المعالجة…")
 
         async def progress(current, total):
             try:
-                await text.edit_text(f"📥 Dᴏᴡɴʟᴏᴀᴅɪɴɢ... {current * 100 / total:.1f}%")
+                await text.edit_text(
+                    f"جاري التحميل… {current * 100 / total:.1f}%"
+                )
             except Exception:
                 pass
 
         try:
             local_path = await media.download(progress=progress)
-            await text.edit_text("📤 Uᴘʟᴏᴀᴅɪɴɢ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ...")
+            await text.edit_text("جاري الرفع على Telegraph…")
 
             success, upload_path = upload_file(local_path)
 
             if success:
                 await text.edit_text(
-                    f"🌐 | [ᴜᴘʟᴏᴀᴅᴇᴅ ʟɪɴᴋ]({upload_path})",
+                    f"تم رفع الملف بنجاح ✅\n\n🔗 [رابط الملف]({upload_path})\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ",
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    "ᴜᴘʟᴏᴀᴅᴇᴅ ғɪʟᴇ",
+                                    "فتح الملف",
                                     url=upload_path,
                                 )
                             ]
@@ -67,7 +71,7 @@ async def get_link_group(client, message):
                 )
             else:
                 await text.edit_text(
-                    f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ғɪʟᴇ\n{upload_path}"
+                    f"حدث خطأ أثناء رفع الملف\n\n{upload_path}\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ"
                 )
 
             try:
@@ -76,7 +80,9 @@ async def get_link_group(client, message):
                 pass
 
         except Exception as e:
-            await text.edit_text(f"❌ Fɪʟᴇ ᴜᴘʟᴏᴀᴅ ғᴀɪʟᴇᴅ\n\n<i>Rᴇᴀsᴏɴ: {e}</i>")
+            await text.edit_text(
+                f"فشل رفع الملف\n\nالسبب: {e}\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ"
+            )
             try:
                 os.remove(local_path)
             except Exception:
@@ -87,20 +93,21 @@ async def get_link_group(client, message):
 
 
 __HELP__ = """
-**ᴛᴇʟᴇɢʀᴀᴘʜ ᴜᴘʟᴏᴀᴅ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅs**
+**أوامر رفع الملفات على Telegraph**
 
-ᴜsᴇ ᴛʜᴇsᴇ ᴄᴏᴍᴍᴀɴᴅs ᴛᴏ ᴜᴘʟᴏᴀᴅ ᴍᴇᴅɪᴀ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ:
+الأوامر المتاحة:
+- `/tgm`
+- `/tgt`
+- `/telegraph`
+- `/tl`
 
-- `/tgm`: ᴜᴘʟᴏᴀᴅ ʀᴇᴘʟɪᴇᴅ ᴍᴇᴅɪᴀ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴘʜ.
-- `/tgt`: sᴀᴍᴇ ᴀs `/tgm`.
-- `/telegraph`: sᴀᴍᴇ ᴀs `/tgm`.
-- `/tl`: sᴀᴍᴇ ᴀs `/tgm`.
+**طريقة الاستخدام:**
+قم بالرد على صورة أو فيديو أو ملف، ثم أرسل الأمر.
 
-**ᴇxᴀᴍᴘʟᴇ:**
-- ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴘʜᴏᴛᴏ ᴏʀ ᴠɪᴅᴇᴏ ᴡɪᴛʜ `/tgm` ᴛᴏ ᴜᴘʟᴏᴀᴅ ɪᴛ.
+**ملاحظة:**
+يجب أن يكون حجم الملف أقل من 200MB.
 
-**ɴᴏᴛᴇ:**
-ʏᴏᴜ ᴍᴜsᴛ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇᴅɪᴀ ғɪʟᴇ ғᴏʀ ᴛʜᴇ ᴜᴘʟᴏᴀᴅ ᴛᴏ ᴡᴏʀᴋ.
+➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
 """
 
 __MODULE__ = "Tᴇʟᴇɢʀᴀᴘʜ"
