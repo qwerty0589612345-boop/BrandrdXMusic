@@ -7,6 +7,8 @@ from typing import Union, Optional
 from PIL import Image, ImageDraw, ImageFont
 import asyncio
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
+
 # --------------------------------------------------------------------------------- #
 
 get_font = lambda font_size, font_path: ImageFont.truetype(font_path, font_size)
@@ -57,10 +59,8 @@ font_path = "BrandrdXMusic/assets/hiroko.ttf"
 
 # --------------------------------------------------------------------------------- #
 
-# -------------
-
 @app.on_chat_member_updated(filters.group, group=20)
-async def member_has_left(client: app, member: ChatMemberUpdated):
+async def member_has_left(client: Client, member: ChatMemberUpdated):
 
     if (
         not member.new_chat_member
@@ -79,10 +79,9 @@ async def member_has_left(client: app, member: ChatMemberUpdated):
         else member.from_user
     )
 
-    # Check if the user has a profile photo
+    # التحقق من وجود صورة بروفايل
     if user.photo and user.photo.big_file_id:
         try:
-            # Add the photo path, caption, and button details
             photo = await app.download_media(user.photo.big_file_id)
 
             welcome_photo = await get_userinfo_img(
@@ -92,13 +91,16 @@ async def member_has_left(client: app, member: ChatMemberUpdated):
                 profile_path=photo,
             )
         
-            caption = f"**#New_Member_Left**\n\n**๏** {user.mention} **ʜᴀs ʟᴇғᴛ ᴛʜɪs ɢʀᴏᴜᴘ**\n**๏ sᴇᴇ ʏᴏᴜ sᴏᴏɴ ᴀɢᴀɪɴ..!**"
-            button_text = "๏ ᴠɪᴇᴡ ᴜsᴇʀ ๏"
+            # تعريب النصوص
+            caption = (
+                f"**#غادر_العضو**\n\n"
+                f"**๏** {user.mention} **غادر المجموعة للأسف..**\n"
+                f"**๏ نشوفك على خير قريب إن شاء الله! ✨**"
+            )
+            button_text = "๏ رؤيـة الـحـسـاب ๏"
 
-            # Generate a deep link to open the user's profile
             deep_link = f"tg://openmessage?user_id={user.id}"
 
-            # Send the message with the photo, caption, and button
             message = await client.send_photo(
                 chat_id=member.chat.id,
                 photo=welcome_photo,
@@ -108,18 +110,21 @@ async def member_has_left(client: app, member: ChatMemberUpdated):
                 ])
             )
 
-            # Schedule a task to delete the message after 30 seconds
+            # وظيفة حذف الرسالة بعد 30 ثانية
             async def delete_message():
                 await asyncio.sleep(30)
-                await message.delete()
+                try:
+                    await message.delete()
+                except:
+                    pass
 
-            # Run the task
             asyncio.create_task(delete_message())
             
         except RPCError as e:
-            print(e)
+            print(f"Error: {e}")
             return
     else:
-        # Handle the case where the user has no profile photo
-        print(f"User {user.id} has no profile photo.")
-        
+        # لو معندوش صورة ممكن نبعت رسالة نصية بسيطة أو نتجاهلها
+        print(f"المستخدم {user.id} معندوش صورة بروفايل.")
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
