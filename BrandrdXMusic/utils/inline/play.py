@@ -111,7 +111,7 @@ def stream_markup2(_, chat_id):
             InlineKeyboardButton(text="❖ الـدعـم ❖", url="https://t.me/music0587"),
         ],
         [
-            InlineKeyboardButton(text="➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ", url="https://t.me/BRANDRD_BOT")
+            InlineKeyboardButton(text="➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ", url="https://t.me/SourceBoda")
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
