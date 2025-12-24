@@ -1,7 +1,7 @@
 from typing import Union
-
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
 
 def queue_markup(
     _,
@@ -23,7 +23,7 @@ def queue_markup(
             ),
         ]
     ]
-    dur = [
+    dur_buttons = [
         [
             InlineKeyboardButton(
                 text=_["QU_B_2"].format(played, dur),
@@ -41,7 +41,8 @@ def queue_markup(
             ),
         ],
     ]
-    upl = InlineKeyboardMarkup(not_dur if DURATION == "Unknown" else dur)
+    # تعديل بسيط لضمان اختيار القائمة الصح بناءً على الوقت
+    upl = InlineKeyboardMarkup(not_dur if DURATION == "Unknown" or DURATION == "بث مباشر" else dur_buttons)
     return upl
 
 
@@ -73,11 +74,14 @@ def aq_markup(_, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⛦ الـمـالـك ⛦", url="https://t.me/S_G0C7"
+                text="❖ الـمـالـك ❖", url="https://t.me/S_G0C7"
             ),
             InlineKeyboardButton(
-                text="🥀 الـدعـم 🥀", url="https://t.me/music0587"
+                text="❖ الـدعـم ❖", url="https://t.me/music0587"
             ),
+        ],
+        [
+            InlineKeyboardButton(text="➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ", url="https://t.me/BRANDRD_BOT")
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
     ]
@@ -85,10 +89,11 @@ def aq_markup(_, chat_id):
 
 
 def queuemarkup(_, vidid, chat_id):
+    from BrandrdXMusic import app # استيراد عشان اليوزر نيم
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
+                text="๏ أضـف الـبـوت لـمـجـمـوعـتـك ๏",
                 url=f"https://t.me/{app.username}?startgroup=true",
             ),
         ],
@@ -118,10 +123,14 @@ def queuemarkup(_, vidid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="๏ الـمـزيـد ๏",
+                text="๏ قـنـاة الـسـورس ๏",
                 url="https://t.me/music0587",
             ),
         ],
+        [
+            InlineKeyboardButton(text="➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ", url="https://t.me/BRANDRD_BOT")
+        ],
     ]
-
     return buttons
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
