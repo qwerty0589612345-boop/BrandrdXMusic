@@ -5,6 +5,7 @@ from BrandrdXMusic.misc import db
 from BrandrdXMusic.utils.formatters import check_duration, seconds_to_min
 from config import autoclean, time_to_seconds
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
 
 async def put_queue(
     chat_id,
@@ -65,6 +66,7 @@ async def put_queue_index(
             )
             duration = seconds_to_min(dur)
         except:
+            # تم استبدال 'ᴜʀʟ sᴛʀᴇᴀᴍ' بـ 'بث مباشر' بناءً على طلبك
             duration = "بث مباشر"
             dur = 0
     else:
@@ -89,3 +91,5 @@ async def put_queue_index(
             db[chat_id].append(put)
     else:
         db[chat_id].append(put)
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
