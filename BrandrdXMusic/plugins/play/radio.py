@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from pyrogram import filters
@@ -24,6 +25,7 @@ from BrandrdXMusic.utils.database import (
 from BrandrdXMusic.utils.logger import play_logs
 from BrandrdXMusic.utils.stream.stream import stream
 
+
 RADIO_STATION = {
     "Air Bilaspur": "http://air.pc.cdn.bitgravity.com/air/live/pbaudio110/playlist.m3u8",
     "Air Raipur": "http://air.pc.cdn.bitgravity.com/air/live/pbaudio118/playlist.m3u8",
@@ -31,6 +33,10 @@ RADIO_STATION = {
     "English": "https://hls-01-regions.emgsound.ru/11_msk/playlist.m3u8",
     "Mirchi": "http://peridot.streamguys.com:7150/Mirchi",
     "Radio Today": "http://stream.zenolive.com/8wv4d8g4344tv",
+
+    # 🕌 إذاعة القرآن الكريم
+    "قرآن كريم": "https://stream.radiojar.com/8s5u5tpdtwzuv",
+
     "YouTube": "https://www.youtube.com/live/eu191hR_LEc?si=T-9QYD548jd0Mogp",
     "Zee News": "https://www.youtube.com/live/TPcmrPrygDc?si=hiHBkIidgurQAd1P",
     "Aaj Tak": "https://www.youtube.com/live/Nq2wYlWFucg?si=usY4UYiSBInKA0S1",
@@ -45,18 +51,18 @@ valid_stations = "\n".join([f"`{name}`" for name in sorted(RADIO_STATION.keys())
     & ~BANNED_USERS
 )
 async def radio(client, message: Message):
-    msg = await message.reply_text("ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ....")
+    msg = await message.reply_text("**يرجى الانتظار قليلاً جاري التحضير.. ✨**")
     try:
         try:
             userbot = await get_assistant(message.chat.id)
             get = await app.get_chat_member(message.chat.id, userbot.id)
         except ChatAdminRequired:
             return await msg.edit_text(
-                f"» ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪssɪᴏɴs ᴛᴏ ɪɴᴠɪᴛᴇ ᴜsᴇʀs ᴠɪᴀ ʟɪɴᴋ ғᴏʀ ɪɴᴠɪᴛɪɴɢ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}."
+                f"**عذراً، لا أملك صلاحية إضافة المساعد {userbot.mention} إلى المجموعة.. 🥀**"
             )
         if get.status == ChatMemberStatus.BANNED:
             return await msg.edit_text(
-                text=f"» {userbot.mention} ᴀssɪsᴛᴀɴᴛ ɪs ʙᴀɴɴᴇᴅ ɪɴ {message.chat.title}\n\n𖢵 ɪᴅ : `{userbot.id}`\n𖢵 ɴᴀᴍᴇ : {userbot.mention}\n𖢵 ᴜsᴇʀɴᴀᴍᴇ : @{userbot.username}\n\nᴘʟᴇᴀsᴇ ᴜɴʙᴀɴ ᴛʜᴇ ᴀssɪsᴛᴀɴᴛ ᴀɴᴅ ᴘʟᴀʏ ᴀɢᴀɪɴ...",
+                text=f"**الحساب المساعد {userbot.mention} محظور في هذه المجموعة {message.chat.title} ❌**\n\n𖢵 ɪᴅ : `{userbot.id}`\n𖢵 ɴᴀᴍᴇ : {userbot.mention}\n𖢵 ᴜsᴇʀɴᴀᴍᴇ : @{userbot.username}\n\n**يرجى إلغاء الحظر عنه والمحاولة مرة أخرى.. ✨**",
             )
     except UserNotParticipant:
         if message.chat.username:
@@ -70,113 +76,72 @@ async def radio(client, message: Message):
                 invitelink = await client.export_chat_invite_link(message.chat.id)
             except ChatAdminRequired:
                 return await msg.edit_text(
-                    f"» ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪssɪᴏɴs ᴛᴏ ɪɴᴠɪᴛᴇ ᴜsᴇʀs ᴠɪᴀ ʟɪɴᴋ ғᴏʀ ɪɴᴠɪᴛɪɴɢ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}."
+                    f"**لا توجد صلاحية (رابط الدعوة) لإضافة المساعد {userbot.mention} هنا.. 🥀**"
                 )
             except InviteRequestSent:
                 try:
                     await app.approve_chat_join_request(message.chat.id, userbot.id)
                 except Exception as e:
                     return await msg.edit(
-                        f"ғᴀɪʟᴇᴅ ᴛᴏ ɪɴᴠɪᴛᴇ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}.\n\n**ʀᴇᴀsᴏɴ :** `{ex}`"
+                        f"**فشلت محاولة دعوة المساعد {userbot.mention} للمجموعة.. 🥀**\n\n**السبب :** `{e}`"
                     )
             except Exception as ex:
                 if "channels.JoinChannel" in str(ex) or "Username not found" in str(ex):
                     return await msg.edit_text(
-                        f"» ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪssɪᴏɴs ᴛᴏ ɪɴᴠɪᴛᴇ ᴜsᴇʀs ᴠɪᴀ ʟɪɴᴋ ғᴏʀ ɪɴᴠɪᴛɪɴɢ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}."
+                        f"**لا توجد صلاحيات كافية لدعوة المساعد {userbot.mention} للمجموعة.. 🥀**"
                     )
                 else:
                     return await msg.edit_text(
-                        f"ғᴀɪʟᴇᴅ ᴛᴏ ɪɴᴠɪᴛᴇ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}.\n\n**ʀᴇᴀsᴏɴ :** `{ex}`"
+                        f"**فشلت دعوة المساعد {userbot.mention} للمجموعة.. 🥀**\n\n**السبب :** `{ex}`"
                     )
         if invitelink.startswith("https://t.me/+"):
             invitelink = invitelink.replace("https://t.me/+", "https://t.me/joinchat/")
-        anon = await msg.edit_text(
-            f"ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...\n\nɪɴᴠɪᴛɪɴɢ {userbot.mention} ᴛᴏ {message.chat.title}."
+        await msg.edit_text(
+            f"**يرجى الانتظار.. جاري إضافة المساعد {userbot.mention} لتشغيل الراديو.. ⚡**"
         )
         try:
             await userbot.join_chat(invitelink)
             await asyncio.sleep(2)
             await msg.edit_text(
-                f"{userbot.mention} ᴊᴏɪɴᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ,\n\nsᴛᴀʀᴛɪɴɢ sᴛʀᴇᴀᴍ..."
+                f"**تم انضمام المساعد {userbot.mention} بنجاح، جاري بدء البث.. ✨📻**"
             )
         except UserAlreadyParticipant:
             pass
         except InviteRequestSent:
-            try:
-                await app.approve_chat_join_request(message.chat.id, userbot.id)
-            except Exception as e:
-                return await msg.edit(
-                    f"ғᴀɪʟᴇᴅ ᴛᴏ ɪɴᴠɪᴛᴇ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}.\n\n**ʀᴇᴀsᴏɴ :** `{ex}`"
-                )
+            await app.approve_chat_join_request(message.chat.id, userbot.id)
         except Exception as ex:
-            if "channels.JoinChannel" in str(ex) or "Username not found" in str(ex):
-                return await msg.edit_text(
-                    f"» ɪ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪssɪᴏɴs ᴛᴏ ɪɴᴠɪᴛᴇ ᴜsᴇʀs ᴠɪᴀ ʟɪɴᴋ ғᴏʀ ɪɴᴠɪᴛɪɴɢ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}."
-                )
-            else:
-                return await msg.edit_text(
-                    f"ғᴀɪʟᴇᴅ ᴛᴏ ɪɴᴠɪᴛᴇ {userbot.mention} ᴀssɪsᴛᴀɴᴛ ᴛᴏ {message.chat.title}.\n\n**ʀᴇᴀsᴏɴ :** `{ex}`"
-                )
+            return await msg.edit_text(
+                f"**حدث خطأ أثناء دعوة المساعد {userbot.mention} للمجموعة.. 🥀**\n\n**السبب :** `{ex}`"
+            )
 
-        try:
-            await userbot.resolve_peer(invitelink)
-        except:
-            pass
     await msg.delete()
     station_name = " ".join(message.command[1:])
     RADIO_URL = RADIO_STATION.get(station_name)
+
     if RADIO_URL:
         language = await get_lang(message.chat.id)
         _ = get_string(language)
-        playmode = await get_playmode(message.chat.id)
-        playty = await get_playtype(message.chat.id)
-        if playty != "Everyone":
-            if message.from_user.id not in SUDOERS:
-                admins = adminlist.get(message.chat.id)
-                if not admins:
-                    return await message.reply_text(_["admin_18"])
-                else:
-                    if message.from_user.id not in admins:
-                        return await message.reply_text(_["play_4"])
-        if message.command[0][0] == "c":
-            chat_id = await get_cmode(message.chat.id)
-            if chat_id is None:
-                return await message.reply_text(_["setting_12"])
-            try:
-                chat = await app.get_chat(chat_id)
-            except:
-                return await message.reply_text(_["cplay_4"])
-            channel = chat.title
-        else:
-            chat_id = message.chat.id
-            channel = None
 
-        video = None
-        mystic = await message.reply_text(
-            _["play_2"].format(channel) if channel else _["play_1"]
+        mystic = await message.reply_text(_["play_1"])
+        await stream(
+            _,
+            mystic,
+            message.from_user.id,
+            RADIO_URL,
+            message.chat.id,
+            message.from_user.mention,
+            message.chat.id,
+            video=None,
+            streamtype="index",
         )
-        try:
-            await stream(
-                _,
-                mystic,
-                message.from_user.id,
-                RADIO_URL,
-                chat_id,
-                message.from_user.mention,
-                message.chat.id,
-                video=video,
-                streamtype="index",
-            )
-        except Exception as e:
-            ex_type = type(e).__name__
-            err = e if ex_type == "AssistantErr" else _["general_3"].format(ex_type)
-            return await mystic.edit_text(err)
         return await play_logs(message, streamtype="M3u8 or Index Link")
     else:
         await message.reply(
-            f"ɢɪᴠᴇ ᴍᴇ ᴀ sᴛᴀᴛɪᴏɴ ɴᴀᴍᴇ ᴛᴏ ᴘʟᴀʏ ʀᴀᴅɪᴏ\nʙᴇʟᴏᴡ ᴀʀᴇ sᴏᴍᴇ sᴛᴀᴛɪᴏɴ ɴᴀᴍᴇ:\n{valid_stations}"
+            f"**يرجى كتابة اسم المحطة بعد الأمر.. 💝**\n\n**المحطات المتاحة هي:**\n{valid_stations}"
         )
 
 
 __MODULE__ = "Rᴀᴅɪᴏ"
-__HELP__ = f"\n/radio [sᴛᴀᴛɪᴏɴ ɴᴀᴍᴇ] - ᴛᴏ ᴘʟᴀʏ **ʀᴀᴅɪᴏ ɪɴ ᴠᴏɪᴄᴇ ᴄʜᴀᴛ**\n\nʙᴇʟᴏᴡ ᴀʀᴇ sᴏᴍᴇ sᴛᴀᴛɪᴏɴ ɴᴀᴍᴇ:\n{valid_stations}"
+__HELP__ = f"\n/radio [اسم المحطة] - **لتشغيل الراديو في الدردشة الصوتية**\n\n**قائمة المحطات المتاحة:**\n{valid_stations}"
+
+➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
