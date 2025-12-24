@@ -14,15 +14,15 @@ from BrandrdXMusic.utils.decorators.language import language, languageCB
 from BrandrdXMusic.utils.inline import queue_back_markup, queue_markup
 from config import BANNED_USERS
 
-basic = {}
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
 
+basic = {}
 
 def get_image(videoid):
     if os.path.isfile(f"cache/{videoid}.png"):
         return f"cache/{videoid}.png"
     else:
         return config.YOUTUBE_IMG_URL
-
 
 def get_duration(playing):
     file_path = playing[0]["file"]
@@ -33,7 +33,6 @@ def get_duration(playing):
         return "Unknown"
     else:
         return "Inline"
-
 
 @app.on_message(
     filters.command(["queue", "cqueue", "player", "cplayer", "playing", "cplaying"])
@@ -165,12 +164,13 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
     for x in got:
         j += 1
         if j == 1:
-            msg += f'Streaming :\n\n✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
+            msg += f'**يتم تشغيله الآن :**\n\n✨ العنوان : {x["title"]}\nالمدة : {x["dur"]}\nبواسطة : {x["by"]}\n\n'
         elif j == 2:
-            msg += f'Queued :\n\n✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
+            msg += f'**قائمة الانتظار :**\n\n✨ العنوان : {x["title"]}\nالمدة : {x["dur"]}\nبواسطة : {x["by"]}\n\n'
         else:
-            msg += f'✨ Title : {x["title"]}\nDuration : {x["dur"]}\nBy : {x["by"]}\n\n'
-    if "Queued" in msg:
+            msg += f'✨ العنوان : {x["title"]}\nالمدة : {x["dur"]}\nبواسطة : {x["by"]}\n\n'
+    
+    if "قائمة الانتظار" in msg:
         if len(msg) < 700:
             await asyncio.sleep(1)
             return await CallbackQuery.edit_message_text(msg, reply_markup=buttons)
@@ -267,3 +267,5 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
                     break
         except:
             return
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ
