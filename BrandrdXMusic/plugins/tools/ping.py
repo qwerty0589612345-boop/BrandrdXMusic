@@ -1,6 +1,7 @@
 from datetime import datetime
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.errors import MessageNotModified
 from BrandrdXMusic import app
 from BrandrdXMusic.core.call import Hotty
 from BrandrdXMusic.utils import bot_sys_stats
@@ -10,7 +11,6 @@ from config import BANNED_USERS, PING_IMG_URL
 
 # ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
 
-# الأمر شغال في (الخاص + الجروبات) وبالعربي والإنجليزي
 @app.on_message(
     filters.command(["ping", "alive", "بنج", "تست", "شغال"], ["/", "!", "", " "]) 
     & ~BANNED_USERS
@@ -19,7 +19,7 @@ from config import BANNED_USERS, PING_IMG_URL
 async def ping_com(client, message: Message, _):
     start = datetime.now()
     
-    # الرد بصورة البنج في الجروب أو الخاص
+    # بيبعت الصورة وبياخد النص من ملف اللغة (ping_1)
     response = await message.reply_photo(
         photo=PING_IMG_URL,
         caption=_["ping_1"].format(app.mention),
@@ -29,10 +29,14 @@ async def ping_com(client, message: Message, _):
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     
-    # تحديث البيانات (السرعة والسيستم)
-    await response.edit_text(
-        _["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
-        reply_markup=supp_markup(_),
-    )
+    try:
+        # بيحدث الرسالة بالنص التاني (ping_2) من ملف اللغة
+        await response.edit_text(
+            _["ping_2"].format(resp, app.mention, UP, RAM, CPU, DISK, pytgping),
+            reply_markup=supp_markup(_),
+        )
+    except MessageNotModified:
+        # عشان لو البيانات مالحقتش تتغير ميبعتش خطأ في اللوج
+        pass
 
 # ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
