@@ -23,6 +23,8 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
@@ -32,21 +34,15 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            # الاستيكر الجديد مع جملة المساعدة وعلامتك
             await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
-            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ")
+            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا")
             return await message.reply_photo(
-                photo=config.START_IMG_URL,
+                photo="https://files.catbox.moe/pghxm8.jpg",
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
-            if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"**المستخدم {message.from_user.mention} فتح البوت عشان يشوف قائمة المطورين.**\n\n**الأيدي :** `{message.from_user.id}`\n**اليوزر :** @{message.from_user.username}",
-                )
             return
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
@@ -80,16 +76,10 @@ async def start_pm(client, message: Message, _):
                 caption=searched_text,
                 reply_markup=key,
             )
-            if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"**المستخدم {message.from_user.mention} فتح البوت عشان يشوف معلومات المسار.**\n\n**الأيدي :** `{message.from_user.id}`\n**اليوزر :** @{message.from_user.username}",
-                )
+            return
     else:
-
         try:
             out = private_panel(_)
-            # ترحيب معرب
             lol = await message.reply_text("✨ منور يا {}.. ❣️".format(message.from_user.mention))
             await asyncio.sleep(0.4)
             await lol.edit_text("✨ أهلاً بك {}.. 🥳".format(message.from_user.mention))
@@ -98,7 +88,6 @@ async def start_pm(client, message: Message, _):
                
             await lol.delete()
             lols = await message.reply_text("**⚡ ج**")
-            # سرعة هادية للتحميل
             await asyncio.sleep(0.4)
             await lols.edit_text("**⚡ جا**")        
             await asyncio.sleep(0.4)
@@ -116,36 +105,26 @@ async def start_pm(client, message: Message, _):
             await asyncio.sleep(0.4)
             await lols.edit_text("**⚡ جاري التحميل....**")
 
-            # الاستيكر الجديد مع جملة المساعدة وعلامتك
             m = await message.reply_sticker("CAACAgUAAxkBApLnNGlLUkfxsOU2qtE-nFtuobU6gwdNAAILFQAC-vEZVMBmWHCQ-sJuNgQ")
-            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅᴀ")
+            await message.reply_text("**لروئية الاوامر اكتب /help 💖**\n\n➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا")
             
-            if message.chat.photo:
-                userss_photo = await app.download_media(
-                    message.chat.photo.big_file_id,
-                )
-            else:
-                userss_photo = "assets/nodp.png"
-            
-            chat_photo = userss_photo if userss_photo else config.START_IMG_URL
+            # تم استبدال الصورة باللينك المطلوب وتجنب الخطأ
+            chat_photo = "https://files.catbox.moe/pghxm8.jpg"
 
-        except AttributeError:
-            chat_photo = "assets/nodp.png"
-        
-        await lols.delete()
-        await m.delete()
-        await message.reply_photo(
-            photo=chat_photo,
-            caption=_["start_2"].format(message.from_user.mention, app.mention),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
-        if await is_on_off(config.LOG):
-            sender_id = message.from_user.id
-            sender_name = message.from_user.first_name
-            return await app.send_message(
-                config.LOG_GROUP_ID,
-                f"**{message.from_user.mention} بدأ تشغيل البوت الآن.**\n\n**الأيدي :** `{sender_id}`\n**الاسم :** {sender_name}",
-            )          
+            await lols.delete()
+            await m.delete()
+            await message.reply_photo(
+                photo=chat_photo,
+                caption=_["start_2"].format(message.from_user.mention, app.mention),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+        except Exception:
+            # في حالة حدوث أي خطأ يبعت الصورة مباشرة
+            await message.reply_photo(
+                photo="https://files.catbox.moe/pghxm8.jpg",
+                caption=_["start_2"].format(message.from_user.mention, app.mention),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
@@ -153,12 +132,11 @@ async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
     await message.reply_photo(
-        photo=config.START_IMG_URL,
+        photo="https://files.catbox.moe/pghxm8.jpg",
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
     return await add_served_chat(message.chat.id)
-
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
@@ -175,20 +153,10 @@ async def welcome(client, message: Message):
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
                     return await app.leave_chat(message.chat.id)
-                if message.chat.id in await blacklisted_chats():
-                    await message.reply_text(
-                        _["start_5"].format(
-                            app.mention,
-                            f"https://t.me/{app.username}?start=sudolist",
-                            config.SUPPORT_CHAT,
-                        ),
-                        disable_web_page_preview=True,
-                    )
-                    return await app.leave_chat(message.chat.id)
-
+                
                 out = start_panel(_)
                 await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                    photo="https://files.catbox.moe/pghxm8.jpg",
                     caption=_["start_3"].format(
                         message.from_user.first_name,
                         app.mention,
@@ -199,5 +167,7 @@ async def welcome(client, message: Message):
                 )
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
-        except Exception as ex:
-            print(ex)
+        except Exception:
+            pass
+
+# ➻ sᴏᴜʀᴄᴇ : بُودَا | ʙᴏᴅَا
